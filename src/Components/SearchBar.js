@@ -1,12 +1,20 @@
-import React from "react";
+import React  from "react";
 
 class SearchBar extends React.Component {
-  state = { term: "" };
+  constructor(props){
+    super(props)
+    this.state = { term: "" };
+    this.inputRef = React.createRef() //To focus input on Reload
+  }
 
   onFormSubmit = (event) => {
     event.preventDefault();
     this.props.onSubmit(this.state.term) 
    };
+
+  componentDidMount(){
+    this.inputRef.current.focus()
+  }
 
 
   render() {
@@ -17,6 +25,7 @@ class SearchBar extends React.Component {
             <label>Search Image</label>
             <input
               type="text"
+              ref={this.inputRef} // To focus on input on reload
               value={this.state.term}
               onChange={(e) => this.setState({ term: e.target.value })}
             />
